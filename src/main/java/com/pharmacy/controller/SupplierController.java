@@ -9,50 +9,50 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/suppliers")
+@RequestMapping("/api/v1/suppliers")
 public class SupplierController {
 
+    private final SupplierService supplierService;
+
     @Autowired
-    private SupplierService supplierService;
+    public SupplierController(SupplierService supplierService) {
+        this.supplierService = supplierService;
+    }
 
     @GetMapping
-    public ResponseEntity<List<Supplier>> getAllSuppliers(){
+    public ResponseEntity<List<Supplier>> getAllSuppliers() {
         List<Supplier> suppliers = supplierService.getAllSuppliers();
-        return new ResponseEntity<>(suppliers, HttpStatus.OK);
+        return ResponseEntity.ok(suppliers);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Supplier> getSupplierById(@PathVariable Long id){
-        return supplierService.getSupplierById(id)
-                .map( supplier -> new ResponseEntity<>(supplier, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Supplier> getSupplierById(@PathVariable Long id) {
+        Optional<Supplier> supplier = supplierService.getSupplierById(id);
+        return supplier.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Supplier> createSupplier(@RequestBody Supplier supplier){
+    public ResponseEntity<Supplier> createSupplier(@RequestBody Supplier supplier) {
         Supplier createdSupplier = supplierService.createSupplier(supplier);
-        return new ResponseEntity<>(createdSupplier, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdSupplier);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Supplier> updateSupplier(@PathVariable Long id, @RequestBody Supplier supplier){
-        Supplier updatedSupplier = supplierService.updateSupplier(id, supplier);
-        if(updatedSupplier != null){
-            return new ResponseEntity<>(updatedSupplier, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Supplier> updateSupplier(@PathVariable Long id, @RequestBody Supplier supplierDetails) {
+        Optional<Supplier> updatedSupplier = supplierService.updateSupplier(id, supplierDetails);
+        return updatedSupplier.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteSupplier(@PathVariable Long id){
-        boolean deleted = supplierService.deleteSupplier(id);
-        if(deleted){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Void> deleteSupplier(@PathVariable Long id) {
+        if (supplierService.deleteSupplier(id)) {
+            return ResponseEntity.noContent().build();
         }
+        return ResponseEntity.notFound().build();
     }
 }

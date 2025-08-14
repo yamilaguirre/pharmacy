@@ -7,12 +7,19 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
 
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
+
 @Entity
-@Table(name = "suppliers")
+@Table(name = "categories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Supplier {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +28,6 @@ public class Supplier {
     @Column(name = "name", nullable = true)
     private String name;
 
-    @Column(name = "identification_number", nullable = true)
-    private String identificationNumber;
-
-    @Column(name = "phone_number", nullable = true)
-    private BigInteger phoneNumber;
-
-    @Column(name = "address", nullable = true)
-    private String address;
+    @Column(name = "image_url", nullable = true)
+    private String imageUrl;
 }
