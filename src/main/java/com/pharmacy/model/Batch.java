@@ -26,12 +26,12 @@ public class Batch {
     @Column(name = "expiration_date", nullable = true)
     private LocalDate expirationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "purchase_detail_id", nullable = false)
     @ToString.Exclude
     private PurchaseDetail purchaseDetail;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
     @ToString.Exclude
     private Product product;

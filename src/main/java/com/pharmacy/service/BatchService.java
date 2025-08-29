@@ -77,4 +77,8 @@ public class BatchService {
         }
         return false;
     }
+
+    public List<Batch> getBatchesByPurchaseDetailId(Long purchaseDetailId) {
+        return batchRepository.findByPurchaseDetailId(purchaseDetailId);
+    }
 }

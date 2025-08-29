@@ -42,4 +42,5 @@ public class Customer {
 
     @Column(name = "is_active", nullable = true)
     private Integer isActive;
+
 }

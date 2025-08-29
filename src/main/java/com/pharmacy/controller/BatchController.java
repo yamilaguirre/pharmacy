@@ -25,6 +25,12 @@ public class BatchController {
         return ResponseEntity.ok(batches);
     }
 
+    @GetMapping("/purchase-detail/{purchaseDetailId}")
+    public ResponseEntity<List<Batch>> getBatchesByPurchaseDetail(@PathVariable Long purchaseDetailId) {
+        List<Batch> batches = batchService.getBatchesByPurchaseDetailId(purchaseDetailId);
+        return ResponseEntity.ok(batches);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Batch> getBatchById(@PathVariable Long id) {
         Optional<Batch> batch = batchService.getBatchById(id);
