@@ -1,6 +1,5 @@
 package com.pharmacy.service;
 
-
 import com.pharmacy.model.Customer;
 import com.pharmacy.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +32,7 @@ public class CustomerService {
 
     public Optional<Customer> updateCustomer(Long id, Customer customerDetails) {
         return customerRepository.findById(id).map(customer -> {
-            customer.setFirstName(customerDetails.getFirstName());
-            customer.setLastName(customerDetails.getLastName());
-            customer.setDateOfBirth(customerDetails.getDateOfBirth());
-            customer.setIdentificationNumber(customerDetails.getIdentificationNumber());
-            customer.setEmail(customerDetails.getEmail());
-            customer.setPhoneNumber(customerDetails.getPhoneNumber());
-            customer.setProfilePictureUrl(customerDetails.getProfilePictureUrl());
-            customer.setIsActive(customerDetails.getIsActive());
-            return customerRepository.save(customer);
+            return customerRepository.save(customerDetails);
         });
     }
 

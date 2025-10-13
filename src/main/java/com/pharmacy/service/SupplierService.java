@@ -32,11 +32,7 @@ public class SupplierService {
 
     public Optional<Supplier> updateSupplier(Long id, Supplier supplierDetails) {
         return supplierRepository.findById(id).map(supplier -> {
-            supplier.setName(supplierDetails.getName());
-            supplier.setIdentificationNumber(supplierDetails.getIdentificationNumber());
-            supplier.setPhoneNumber(supplierDetails.getPhoneNumber());
-            supplier.setAddress(supplierDetails.getAddress());
-            return supplierRepository.save(supplier);
+            return supplierRepository.save(supplierDetails);
         });
     }
 

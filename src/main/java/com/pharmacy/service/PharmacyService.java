@@ -32,11 +32,7 @@ public class PharmacyService {
 
     public Optional<Pharmacy> updatePharmacy(Long id, Pharmacy pharmacyDetails) {
         return pharmacyRepository.findById(id).map(pharmacy -> {
-            pharmacy.setTaxId(pharmacyDetails.getTaxId());
-            pharmacy.setName(pharmacyDetails.getName());
-            pharmacy.setAddress(pharmacyDetails.getAddress());
-            pharmacy.setPhoneNumber(pharmacyDetails.getPhoneNumber());
-            return pharmacyRepository.save(pharmacy);
+            return pharmacyRepository.save(pharmacyDetails);
         });
     }
 

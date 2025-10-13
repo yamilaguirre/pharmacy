@@ -1,4 +1,5 @@
 package com.pharmacy.service;
+
 import com.pharmacy.model.Category;
 import com.pharmacy.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,7 @@ public class CategoryService {
 
     public Optional<Category> updateCategory(Long id, Category categoryDetails) {
         return categoryRepository.findById(id).map(category -> {
-            category.setName(categoryDetails.getName());
-            category.setImageUrl(categoryDetails.getImageUrl());
-            return categoryRepository.save(category);
+            return categoryRepository.save(categoryDetails);
         });
     }
 
